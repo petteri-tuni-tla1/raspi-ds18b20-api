@@ -49,7 +49,7 @@
     async function updateData() {
         try {
             // Replace with your actual Flask URL if different
-            const response = await fetch('sensor/get-temp');
+            const response = await fetch('/sensor/get-temp');
             const data = await response.json();
             console.log(data);
             
