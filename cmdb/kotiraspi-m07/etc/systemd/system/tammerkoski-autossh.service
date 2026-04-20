@@ -1,0 +1,14 @@
+[Unit]
+Description=SSH Tunnel to tammerkoski.ilab.fi - reverse port forwarding
+After=network.target
+
+[Service]
+ExecStart=/opt/platform/tammerkoski_autossh.sh
+#ExecStart=/usr/bin/autossh -M 0 -fN -R 22022:localhost:22 autossh@portal25.ithou.fi
+User=autossh
+RemainAfterExit=true
+Type=oneshot
+#Restart=always
+
+[Install]
+WantedBy=default.target

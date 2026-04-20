@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Value Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f7f6; margin: 0; }
+        .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+        h1 { color: #333; margin-bottom: 0.5rem; }
+        .value-display { font-size: 3rem; font-weight: bold; color: #2d89ef; margin: 1rem 0; }
+        .gauge-container { position: relative; width: 200px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Server Data</h1>
+    <div id="number" class="value-display">--</div>
+    <div class="gauge-container">
+        <canvas id="gaugeChart"></canvas>
+    </div>
+    <p style="color: #666; font-size: 0.9rem;">Live from Python Service</p>
+</div>
+
+<script>
+    const ctx = document.getElementById('gaugeChart').getContext('2d');
+    
+    // Initialize the Gauge (Semi-Doughnut)
+    const gaugeChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [0, 100], // Start at 0
+                backgroundColor: ['#2d89ef', '#e0e0e0'],
+                borderWidth: 0,
+                circumference: 180,
+                rotation: 270,
+                cutout: '80%'
+            }]
+        },
+        options: {
+            aspectRatio: 1.5,
+            plugins: { tooltip: { enabled: false }, legend: { display: false } }
+        }
+    });
+
+    async function updateData() {
+        try {
+            // Replace with your actual Flask URL if different
+            const response = await fetch('sensor/get-temp');
+            const data = await response.json();
+            console.log(data);
+            
+            if (data.value !== undefined) {
+                const val = data.value;
+                
+                // Update Number
+                document.getElementById('number').innerText = val;
+
+                // Update Gauge (assuming a max of 100 for visual scale)
+                const max = 100;
+                gaugeChart.data.datasets[0].data = [val, Math.max(0, max - val)];
+                gaugeChart.update();
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            document.getElementById('number').innerText = "Err";
+        }
+    }
+
+    // Refresh every 2 seconds
+    setInterval(updateData, 2000);
+    updateData(); // Initial call
+</script>
+
+</body>
+</html>
+
