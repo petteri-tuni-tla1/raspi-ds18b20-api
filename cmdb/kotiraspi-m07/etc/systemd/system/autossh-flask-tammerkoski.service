@@ -3,7 +3,7 @@ Description=SSH Tunnel to tammerkoski.ilab.fi for temperature flask
 After=network.target
 
 [Service]
-ExecStart=/opt/platform/autossh_flask_tammerkoski.sh
+ExecStart=/opt/raspi/platform/autossh_flask_tammerkoski.sh
 User=autossh
 RemainAfterExit=true
 Type=oneshot

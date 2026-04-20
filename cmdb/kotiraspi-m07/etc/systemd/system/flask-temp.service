@@ -5,9 +5,9 @@ After=network.target
 [Service]
 User=pi
 Group=pi
-WorkingDirectory=/opt/iot/flask-temp
-Environment="PATH=/opt/iot/flask-temp/venv/bin"
-ExecStart=/opt/iot/flask-temp/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:5001 app:app
+WorkingDirectory=/opt/raspi/iot/flask-temp
+Environment="PATH=/opt/raspi/iot/flask-temp/venv/bin"
+ExecStart=/opt/raspi/iot/flask-temp/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:5001 app:app
 
 [Install]
 WantedBy=multi-user.target

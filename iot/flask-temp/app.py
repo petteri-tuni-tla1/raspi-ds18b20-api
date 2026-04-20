@@ -4,7 +4,7 @@ import glob
 import time
 
 # The path to your file containing the integer
-FILE_PATH = "/opt/iot/data/temp1.txt"
+FILE_PATH = "/opt/raspi/iot/data/temp1.txt"
  
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
