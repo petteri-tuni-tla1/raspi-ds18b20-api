@@ -3,7 +3,7 @@ import time
 
 pin1=19
 pin2=26
-pausetime=33
+pausetime=3
 
 gpio.setmode(gpio.BCM)
 gpio.setup(pin1, gpio.OUT)
